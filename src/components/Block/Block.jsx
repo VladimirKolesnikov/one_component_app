@@ -1,7 +1,8 @@
 import './Block.scss';
+import { TempChart } from './TempChart';
 
 export const Block = () => {
     return (
-        <div className="block">this is Block!</div>
+        <TempChart />
     )
 };

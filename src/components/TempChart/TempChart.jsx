@@ -1,15 +1,10 @@
 import { Line } from "react-chartjs-2";
-import {
-    Chart as ChartJS,
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    Tooltip,
-    Legend,
-} from "chart.js";
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
+const a = (list) => {
+    list.reduce((acc, curr) => {
+        curr.dt_txt.split(' ');
+    }, [])
+}
 
 export const TempChart = () => {
     const data = {
@@ -53,11 +48,11 @@ export const TempChart = () => {
 
         scales: {
             x: {
-                grid: { color: "blue" },
+                grid: { color: "#ddd" },
             },
             y: {
                 beginAtZero: true,
-                grid: { color: "#ddd" },
+                grid: { color: "darkcyan" },
             },
         },
     };

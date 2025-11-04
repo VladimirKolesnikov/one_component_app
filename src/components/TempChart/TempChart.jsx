@@ -1,28 +1,27 @@
 import { Line } from "react-chartjs-2";
 
-const a = (list) => {
-    list.reduce((acc, curr) => {
-        curr.dt_txt.split(' ');
-    }, [])
-}
+export const TempChart = ({ weatherList }) => {
+    console.log(weatherList.map(item => item.mainFeelsLike),)
 
-export const TempChart = () => {
+    // const days = weatherList.map(item => item.dtObj.toLocaleDateString("uk-UA", { weekday: "short" }))
+    // console.log(days)
+
     const data = {
-        labels: ["Січ", "Лют", "Бер", "Квіт", "Трав", "Черв"],
+        labels: weatherList.map(item => item.dtObj.getHours()),
         datasets: [
             {
-                label: "Продажі, грн",
-                data: [300, 450, 400, 600, 550, 700],
+                label: "feels like",
+                data: weatherList.map(item => item.mainFeelsLike),
                 borderColor: "black",
-                backgroundColor: "yellow",
-                tension: 0.4,
-                fill: true,
+                // backgroundColor: "yellow",
+                tension: 0.2,
+                fill: false,
             },
             {
-                label: "another chart",
-                data: [-100, 350, 800, 650, 650, 450],
+                label: "temperature",
+                data: weatherList.map(item => item.mainTemp),
                 borderColor: "green",
-                backgroundColor: "red",
+                // backgroundColor: "red",
                 tension: 0.4,
                 fill: true,
             },
@@ -51,7 +50,7 @@ export const TempChart = () => {
                 grid: { color: "#ddd" },
             },
             y: {
-                beginAtZero: true,
+                // beginAtZero: true,
                 grid: { color: "darkcyan" },
             },
         },
@@ -61,3 +60,27 @@ export const TempChart = () => {
         <Line data={data} options={options} />
     )
 };
+
+
+
+    // const data = {
+    //     labels: ["Січ", "Лют", "Бер", "Квіт", "Трав", "Черв"],
+    //     datasets: [
+    //         {
+    //             label: "Продажі, грн",
+    //             data: [30, 45, 40, 60, 55, 70],
+    //             borderColor: "black",
+    //             // backgroundColor: "yellow",
+    //             tension: 0.2,
+    //             fill: false,
+    //         },
+    //         {
+    //             label: "another chart",
+    //             data: [10, 35, 80, 65, 65, 45],
+    //             borderColor: "green",
+    //             backgroundColor: "red",
+    //             tension: 0.4,
+    //             fill: true,
+    //         },
+    //     ],
+    // };

@@ -1,18 +1,10 @@
-import data from './public/api/weatherList.json';
-
-// console.log(data);
-const { list } = data;
-console.log(new Date("2025-10-31T03:00:00Z").toLocaleDateString("uk-UA", { weekday: "long" }))
-console.log(new Date("2025-10-30T23:00:00Z").toLocaleDateString("uk-UA", { weekday: "long" }))
-console.log(new Date("2025-10-31 14:00:00").getDay())
-
-const calcAverageNumber = (arr) => {
-    const sum = arr.reduce((acc, item) => acc + item, 0)
-
-    return Math.round((sum / arr.length) * 100) / 100
-}
-
 const transformToDailyForecast = (normalizedWeatherList) => {
+    const calcAverageNumber = (arr) => {
+        const sum = arr.reduce((acc, item) => acc + item, 0)
+
+        return Math.round((sum / arr.length) * 100) / 100
+    }
+
     const groupByDay = (list) => {
         return list.reduce((acc, current) => {
             const lastItem = acc[acc.length - 1]
@@ -40,7 +32,8 @@ const transformToDailyForecast = (normalizedWeatherList) => {
 
     const first = groupByDay(normalizedWeatherList);
     const second = calculateAverage(first);
-    return second.slice(0, 3);
+    // return second.slice(0, 5);
+    return second;
 }
 
 const normalizeWeatherItem = (item) => {
@@ -53,9 +46,4 @@ const normalizeWeatherItem = (item) => {
     }
 }
 
-const nwi = list.map(normalizeWeatherItem)
-// console.log(list.map(normalizeWeatherItem));
-const res = transformToDailyForecast(nwi)
-console.log(res)
-// console.log(new Date(res[0].dtObj))
-// console.log(calcAverageNumber([2, 4, 6]))
+export {normalizeWeatherItem, transformToDailyForecast }

@@ -3,18 +3,17 @@ import { TempChart } from '../TempChart';
 
 import weatherDataFromServer from '../../../public/api/weatherList.json';
 import { useState } from 'react';
-import { normalizeWeatherItem } from '../../helpers/weatherHelpers';
+import { makeDailyForecast, makeWeeklyForecast } from '../../helpers/weatherHelpers';
 
 
 export const Block = () => {
-    const weatherList = weatherDataFromServer.list
-    const [normalizedWeatherList] = useState(weatherList.map(normalizeWeatherItem));
-
-    console.log(normalizedWeatherList)
+    const weatherListFromServer = weatherDataFromServer.list
+    const [weatherList] = useState(weatherListFromServer);
 
     return (
         <div className='block'>
-            <TempChart weatherList={normalizedWeatherList.slice(0, 5)} />
+            <TempChart weatherList={makeDailyForecast(weatherList)} />
+            {/* <TempChart weatherList={makeWeeklyForecast(weatherList)} /> */}
         </div>
     )
 };

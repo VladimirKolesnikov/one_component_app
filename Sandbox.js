@@ -59,3 +59,6 @@ const res = transformToDailyForecast(nwi)
 console.log(res)
 // console.log(new Date(res[0].dtObj))
 // console.log(calcAverageNumber([2, 4, 6]))
+
+
+// https://www.reddit.com/r/MTB/comments/1g2gbip/muc_off_big_bore_valves_first_impressions/?tl=ru

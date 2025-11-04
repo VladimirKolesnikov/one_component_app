@@ -1,17 +1,14 @@
 import { Line } from "react-chartjs-2";
 
 export const TempChart = ({ weatherList }) => {
-    console.log(weatherList.map(item => item.mainFeelsLike),)
-
-    // const days = weatherList.map(item => item.dtObj.toLocaleDateString("uk-UA", { weekday: "short" }))
-    // console.log(days)
+    console.log(weatherList)
 
     const data = {
-        labels: weatherList.map(item => item.dtObj.getHours()),
+        labels: weatherList.map(i => i.dtObj),
         datasets: [
             {
                 label: "feels like",
-                data: weatherList.map(item => item.mainFeelsLike),
+                data: weatherList.map(i => i.mainFeelsLike),
                 borderColor: "black",
                 // backgroundColor: "yellow",
                 tension: 0.2,
@@ -19,7 +16,7 @@ export const TempChart = ({ weatherList }) => {
             },
             {
                 label: "temperature",
-                data: weatherList.map(item => item.mainTemp),
+                data: weatherList.map(i => i.mainTemp),
                 borderColor: "green",
                 // backgroundColor: "red",
                 tension: 0.4,

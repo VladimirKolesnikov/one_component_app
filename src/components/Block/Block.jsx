@@ -1,19 +1,25 @@
 import './Block.scss';
 import { TempChart } from '../TempChart';
 
-import weatherDataFromServer from '../../../public/api/weatherList.json';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { makeDailyForecast, makeWeeklyForecast } from '../../helpers/weatherHelpers';
+import { getWeaterList } from '../../services/weather.service';
 
 
 export const Block = () => {
-    const weatherListFromServer = weatherDataFromServer.list
-    const [weatherList] = useState(weatherListFromServer);
+    const [weatherList, setWeatherList] = useState([]);
 
+    useEffect(() => {
+        getWeaterList()
+            .then(setWeatherList)
+    }, [])
+
+    
+console.log('from block')
     return (
         <div className='block'>
             <TempChart weatherList={makeDailyForecast(weatherList)} />
-            {/* <TempChart weatherList={makeWeeklyForecast(weatherList)} /> */}
+            <TempChart weatherList={makeWeeklyForecast(weatherList)} />
         </div>
     )
 };

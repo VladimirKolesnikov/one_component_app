@@ -1,19 +1,34 @@
 
-const API_BASE = 'https://api.openweathermap.org/data/2.5/forecast';
+const API_BASE = 'https://api.openweathermap.org';
 
-const params = new URLSearchParams({
-    lat: 47,
-    lon: 35,
+const defaultParams = {
     appid: import.meta.env.VITE_API_ID,
     // appid: '9a609c0ca09ce1f3734dd3d9a62e32a6',
-    units: 'metric',
-});
+};
 
 const getWeaterList = () => {
-    console.log('from api', import.meta.env.VITE_API_ID)
-    return fetch(`${API_BASE}?${params}`)
+    const params = new URLSearchParams({
+        ...defaultParams,
+        lat: 47,
+        lon: 35,
+        units: 'metric',
+    })
+
+    return fetch(`${API_BASE}/data/2.5/forecast?${params}`)
         .then(responce => responce.json())
         .then(weatherJson => weatherJson.list)
 };
 
-export { getWeaterList }
+const getLocation = (q) => {
+    console.log(q)
+    const params = new URLSearchParams({
+        ...defaultParams,
+        limit: 100,
+        q,
+    })
+
+    return fetch(`${API_BASE}/geo/1.0/direct?${params}`)
+        .then(responce => responce.json())
+};
+
+export { getWeaterList, getLocation }

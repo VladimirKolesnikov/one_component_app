@@ -1,31 +1,29 @@
 import { useEffect, useState } from "react"
 import { getLocation } from "../../services/weather.service";
+import { useDebounce } from "../../hooks/useDebounce";
+
+import './SearchBar.scss';
 
 export const SearchBar = () => {
-    const submitHandler = (event) => {
-        event.preventDefault()
-        console.log('submit')
-    }
-
     const [searchQuery, setSearchQuery] = useState('')
     const [citiesList, setCitiesList] = useState([]);
 
-    const changeInputHandler = (event) => {
-        setSearchQuery(event.target.value)
-    }
+    const changeInputHandler = (event) => setSearchQuery(event.target.value)
+
+    const debouncedSearchQuery = useDebounce(searchQuery, 400)
 
     useEffect(() => {
-        if (!searchQuery.trim()) {
+        if (!debouncedSearchQuery.trim()) {
             setCitiesList([])
             return
         }
 
-        getLocation(searchQuery).then(setCitiesList)
-    }, [searchQuery])
+        getLocation(debouncedSearchQuery).then(setCitiesList)
+    }, [debouncedSearchQuery])
 
     return (
         <div>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={(e) => e.preventDefault()}>
                 <input 
                     type="text"
                     value={searchQuery}
@@ -42,8 +40,10 @@ const SearchList = ({ citiesList }) => {
     // console.log(citiesList)
     return citiesList.map(city => {
         return (
-        <div>
-            <SearchListItem city={city} key={city.lat + city.lon}/>
+        <div className="search-results">
+            <ul className="search-list">
+                <SearchListItem city={city} key={city.lat + city.lon}/>
+            </ul>
         </div>
     )
     })
@@ -53,8 +53,8 @@ const SearchListItem = ({ city }) => {
     const { name, state, country } = city;
 
     return (
-        <div>
+        <li>
             {name + " | " + state + " | " + country}
-        </div>
+        </li>
     )
 }

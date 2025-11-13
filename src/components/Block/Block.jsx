@@ -14,8 +14,6 @@ export const Block = () => {
             .then(setWeatherList)
     }, [])
 
-    
-console.log('from block')
     return (
         <div className='block'>
             <TempChart weatherList={makeDailyForecast(weatherList)} />

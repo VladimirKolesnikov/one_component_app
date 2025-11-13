@@ -1,7 +1,6 @@
 import { Line } from "react-chartjs-2";
 
 export const TempChart = ({ weatherList }) => {
-    console.log(weatherList)
 
     const data = {
         labels: weatherList.map(i => i.dtObj),

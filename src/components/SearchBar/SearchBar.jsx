@@ -2,31 +2,33 @@ import { useEffect, useState } from "react"
 import { getLocation } from "../../services/weather.service";
 
 export const SearchBar = () => {
-    const [value, setValue] = useState('')
-    const [citiesList, setCitiesList] = useState([]);
-
     const submitHandler = (event) => {
         event.preventDefault()
         console.log('submit')
     }
 
+    const [searchQuery, setSearchQuery] = useState('')
+    const [citiesList, setCitiesList] = useState([]);
+
     const changeInputHandler = (event) => {
-        setValue(event.target.value)
+        setSearchQuery(event.target.value)
     }
 
     useEffect(() => {
-        if(value) {
-            getLocation(value).then(setCitiesList)
-            // console.log(citiesList)
+        if (!searchQuery.trim()) {
+            setCitiesList([])
+            return
         }
-    }, [value])
+
+        getLocation(searchQuery).then(setCitiesList)
+    }, [searchQuery])
 
     return (
         <div>
             <form onSubmit={submitHandler}>
                 <input 
                     type="text"
-                    value={value}
+                    value={searchQuery}
                     onChange={changeInputHandler}
                 ></input>
                 <button type="sumbit">search</button>

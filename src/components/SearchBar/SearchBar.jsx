@@ -22,14 +22,14 @@ export const SearchBar = () => {
     }, [debouncedSearchQuery])
 
     return (
-        <div>
+        <div className="search-bar">
             <form onSubmit={(e) => e.preventDefault()}>
                 <input 
                     type="text"
                     value={searchQuery}
                     onChange={changeInputHandler}
-                ></input>
-                <button type="sumbit">search</button>
+                />
+                <button type="submit">search</button>
             </form>
             <SearchList citiesList={citiesList}/>
         </div>
@@ -38,15 +38,19 @@ export const SearchBar = () => {
 
 const SearchList = ({ citiesList }) => {
     // console.log(citiesList)
-    return citiesList.map(city => {
-        return (
-        <div className="search-results">
-            <ul className="search-list">
-                <SearchListItem city={city} key={city.lat + city.lon}/>
-            </ul>
-        </div>
+
+    return (
+        <ul className="search-list">
+            {citiesList.map((city, idx) => {
+                return (
+                    <SearchListItem 
+                        city={city} 
+                        key={idx}
+                    />
+                )
+            })}
+        </ul>
     )
-    })
 }
 
 const SearchListItem = ({ city }) => {
@@ -54,7 +58,8 @@ const SearchListItem = ({ city }) => {
 
     return (
         <li>
-            {name + " | " + state + " | " + country}
+            {/* {name + " | " + state + " | " + country} */}
+            {country + " | " + state + " | " + name}
         </li>
     )
 }

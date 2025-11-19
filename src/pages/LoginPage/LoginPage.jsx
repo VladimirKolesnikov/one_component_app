@@ -1,10 +1,26 @@
 import './LoginPage.scss';
 
 export const LoginPage = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
+    }
+
+    const handleReset = () => {
+        //
+    }
+
+    const handleEmailChange = (event) => {
+        //
+    }
+
     return (
-        <form className='login-form'>
+        <form
+            onSubmit={handleSubmit}
+            onReset={handleReset}
+            className='login-form'
+        >
             <label htmlFor='email-field'>email</label>
-            <input id='email-field' type='email' />
+            <input onChange={handleEmailChange} id='email-field' type='email' />
 
             <label htmlFor='psw-field'>password</label>
             <input id='psw-field' type='password' />

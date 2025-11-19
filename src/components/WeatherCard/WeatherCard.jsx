@@ -1,4 +1,4 @@
-import './Block.scss';
+import './WeatherCard.scss';
 import { TempChart } from '../TempChart';
 
 import { useEffect, useState } from 'react';
@@ -6,16 +6,22 @@ import { makeDailyForecast, makeWeeklyForecast } from '../../helpers/weatherHelp
 import { getWeaterList } from '../../services/weather.service';
 
 
-export const Block = () => {
+export const Block = ({ currentCoord }) => {
+    // console.log(currentCoord)
     const [weatherList, setWeatherList] = useState([]);
 
     useEffect(() => {
-        getWeaterList()
+        if(!currentCoord) return
+
+        getWeaterList(currentCoord)
             .then(setWeatherList)
-    }, [])
+    }, [currentCoord])
 
     return (
-        <div className='block'>
+        <div className='WeatherCard'>
+            {currentCoord && (
+                <h3>{`lat: ${currentCoord.lat}, lon: ${currentCoord.lon}`}</h3>
+            )}
             <TempChart weatherList={makeDailyForecast(weatherList)} />
             <TempChart weatherList={makeWeeklyForecast(weatherList)} />
         </div>

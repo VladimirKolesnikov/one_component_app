@@ -1,11 +1,12 @@
-import { Container } from './components/Container'
+import { HomePage } from './pages/HomePage'
 import { Header } from './components/Header/Header'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
     <>
       <Header />
-      <Container />
+      <Outlet />
     </>
   )
 }

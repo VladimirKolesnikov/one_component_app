@@ -6,13 +6,14 @@ const defaultParams = {
     // appid: '9a609c0ca09ce1f3734dd3d9a62e32a6',
 };
 
-const getWeaterList = () => {
+const getWeaterList = (coord = { lat: 0, lon: 0}) => {
     const params = new URLSearchParams({
         ...defaultParams,
-        lat: 47,
-        lon: 35,
+        ...coord,
         units: 'metric',
     })
+
+    console.log(coord)
 
     return fetch(`${API_BASE}/data/2.5/forecast?${params}`)
         .then(responce => responce.json())

@@ -4,12 +4,15 @@ import { useDebounce } from "../../hooks/useDebounce";
 
 import './SearchBar.scss';
 
-export const SearchBar = () => {
+export const SearchBar = ({ changeCoord }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [citiesList, setCitiesList] = useState([]);
 
-    const changeInputHandler = (event) => setSearchQuery(event.target.value)
+    const selectCityHandler = (newCoord) => {
+        changeCoord(newCoord)
+    }
 
+    const changeInputHandler = (event) => setSearchQuery(event.target.value)
     const debouncedSearchQuery = useDebounce(searchQuery, 400)
 
     useEffect(() => {
@@ -31,35 +34,32 @@ export const SearchBar = () => {
                 />
                 <button type="submit">search</button>
             </form>
-            <SearchList citiesList={citiesList}/>
+            <SearchList citiesList={citiesList} selectCityHandler={selectCityHandler}/>
         </div>
     )
 }
 
-const SearchList = ({ citiesList }) => {
-    // console.log(citiesList)
+const SearchList = ({ citiesList, selectCityHandler }) => {
+
+    const optionSelectHandler = (i) => {
+        const { lat, lon } = citiesList[i]
+        console.log(lat, lon)
+        selectCityHandler({ lat, lon })
+    }
 
     return (
         <ul className="search-list">
             {citiesList.map((city, idx) => {
+                const { name, state, country } = city;
                 return (
-                    <SearchListItem 
-                        city={city} 
+                    <li
                         key={idx}
-                    />
+                        onClick={(e) => optionSelectHandler(idx)}
+                    >
+                        {idx + " - " + country + " | " + state + " | " + name}
+                    </li>
                 )
             })}
         </ul>
-    )
-}
-
-const SearchListItem = ({ city }) => {
-    const { name, state, country } = city;
-
-    return (
-        <li>
-            {/* {name + " | " + state + " | " + country} */}
-            {country + " | " + state + " | " + name}
-        </li>
     )
 }

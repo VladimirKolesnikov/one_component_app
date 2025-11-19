@@ -9,14 +9,14 @@ import { HomePage } from './pages/HomePage';
 export const Root = () => (
   <BrowserRouter>
     <StrictMode>
-        <Routes>
-            <Route path='/' element={<App />}>
-                <Route index element={<HomePage />} />
-                <Route path='favourite' element={<FavouritePage />} />
-                <Route path='login' element={<LoginPage />} />
-                <Route path='*' element={<ErrorPage />} />
-            </Route>
-        </Routes>
+      <Routes>
+        <Route path='/' element={<App />}>
+          <Route index element={<HomePage />} />
+          <Route path='favourite' element={<FavouritePage />} />
+          <Route path='login' element={<LoginPage />} />
+          <Route path='*' element={<ErrorPage />} />
+        </Route>
+      </Routes>
     </StrictMode>
   </BrowserRouter>
 )

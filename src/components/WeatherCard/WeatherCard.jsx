@@ -3,25 +3,30 @@ import { TempChart } from '../TempChart';
 
 import { useEffect, useState } from 'react';
 import { makeDailyForecast, makeWeeklyForecast } from '../../helpers/weatherHelpers';
-import { getWeaterList } from '../../services/weather.service';
+import { getCityByLocation, getWeaterList } from '../../services/weather.service';
 
 
-export const Block = ({ currentCoord }) => {
+export const WeatherCard = ({ currentCoord }) => {
     // console.log(currentCoord)
     const [weatherList, setWeatherList] = useState([]);
+    const [city, setCity] = useState('abc');
 
     useEffect(() => {
         if(!currentCoord) return
 
         getWeaterList(currentCoord)
             .then(setWeatherList)
+
+        getCityByLocation(currentCoord)
+            .then(setCity)
     }, [currentCoord])
 
     return (
         <div className='WeatherCard'>
-            {currentCoord && (
-                <h3>{`lat: ${currentCoord.lat}, lon: ${currentCoord.lon}`}</h3>
-            )}
+            {city && (() => {
+                const localCityName = city.en ? city.en : Object.values(city)[0]
+                return <h3>{`${localCityName}`}</h3>
+            })()}
             <TempChart weatherList={makeDailyForecast(weatherList)} />
             <TempChart weatherList={makeWeeklyForecast(weatherList)} />
         </div>

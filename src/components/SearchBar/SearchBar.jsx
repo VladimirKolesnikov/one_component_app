@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getLocation } from "../../services/weather.service";
+import { getLocationByCity } from "../../services/weather.service";
 import { useDebounce } from "../../hooks/useDebounce";
 
 import './SearchBar.scss';
@@ -21,7 +21,7 @@ export const SearchBar = ({ changeCoord }) => {
             return
         }
 
-        getLocation(debouncedSearchQuery).then(setCitiesList)
+        getLocationByCity(debouncedSearchQuery).then(setCitiesList)
     }, [debouncedSearchQuery])
 
     return (

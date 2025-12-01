@@ -1,5 +1,5 @@
 import './HomePage.scss';
-import { Block } from '../../components/WeatherCard';
+import { WeatherCard } from '../../components/WeatherCard';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +19,7 @@ export const HomePage = () => {
     return (
         <div className="container">
             <SearchBar changeCoord={changeCoord}/>
-            <Block currentCoord={currentCoord}/>
+            <WeatherCard currentCoord={currentCoord}/>
         </div>
     )
 };

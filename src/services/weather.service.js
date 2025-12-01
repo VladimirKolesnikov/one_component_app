@@ -20,7 +20,7 @@ const getWeaterList = (coord = { lat: 0, lon: 0}) => {
         .then(weatherJson => weatherJson.list)
 };
 
-const getLocation = (q) => {
+const getLocationByCity = (q) => {
     console.log(q)
     const params = new URLSearchParams({
         ...defaultParams,
@@ -32,4 +32,21 @@ const getLocation = (q) => {
         .then(responce => responce.json())
 };
 
-export { getWeaterList, getLocation }
+const getCityByLocation = (coords) => {
+    //geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}
+    const params = new URLSearchParams({
+        ...defaultParams,
+        limit: 10,
+        ...coords,
+    })
+
+    return fetch(`${API_BASE}/geo/1.0/reverse?${params}`)
+        .then(responce => responce.json())
+        .then(cityNames => {
+            console.log(cityNames, '-cityNames length')
+            // add name if not local_names
+            return cityNames[0].local_names
+        })
+}
+
+export { getWeaterList, getLocationByCity, getCityByLocation }

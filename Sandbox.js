@@ -1,5 +1,5 @@
 import data from './public/api/weatherList.json';
-import { getLocation } from './src/services/weather.service';
+import { getLocationByCity } from './src/services/weather.service';
 
 // console.log(data);
 const { list } = data;

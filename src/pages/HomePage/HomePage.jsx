@@ -19,6 +19,7 @@ export const HomePage = () => {
     return (
         <div className="container">
             <SearchBar changeCoord={changeCoord}/>
+            <p/>
             <WeatherCard currentCoord={currentCoord}/>
         </div>
     )

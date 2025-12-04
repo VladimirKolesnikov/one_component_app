@@ -2,14 +2,19 @@ import express from 'express';
 
 const app = express();
 
-app.get('/', (req, res, next) => {
-    res.write('<h1>ololo!</h1>')
-    next()
-})
+app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.write('<h2>ololo!2</h2>')
+    //
+})
+
+app.post('/', (req, res) => {
+    console.log('this is post!!')
+    const b = req.body
+    console.log(b)
     res.end()
 })
 
 app.listen(3005);
+
+// watch video "express cors" 03:54

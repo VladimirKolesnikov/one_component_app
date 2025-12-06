@@ -5,10 +5,12 @@ const app = express();
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    //
+    console.log(req.headers)
+    res.send({'a': 1, 'b': 2})
 })
 
 app.post('/', (req, res) => {
+    console.log(req.headers.origin)
     console.log('this is post!!')
     const b = req.body
     console.log(b)

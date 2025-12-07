@@ -3,7 +3,7 @@ import { TempChart } from '../TempChart';
 
 import { useEffect, useState } from 'react';
 import { makeDailyForecast, makeWeeklyForecast } from '../../helpers/weatherHelpers';
-import { getCityByLocation, getWeaterList } from '../../services/weather.service';
+import { getCityByLocation, getWeatherList } from '../../services/weather.service';
 
 
 export const WeatherCard = ({ currentCoord }) => {
@@ -14,7 +14,7 @@ export const WeatherCard = ({ currentCoord }) => {
     useEffect(() => {
         if(!currentCoord) return
 
-        getWeaterList(currentCoord)
+        getWeatherList(currentCoord)
             .then(setWeatherList)
 
         getCityByLocation(currentCoord)

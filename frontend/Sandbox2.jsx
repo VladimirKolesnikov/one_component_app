@@ -1,3 +1,21 @@
+
+export const SandBox = () => {
+    const clickHandler = () => {
+        console.log('button')
+        fetch('http://localhost:3005', { method: 'get' })
+            .then(console.log)
+}
+
+    return (
+        <button
+            onClick={clickHandler}
+        >ololo</button>
+    )
+}
+
+
+
+
 // export const SearchBar = () => {
 //     const [searchQuery, setSearchQuery] = useState('')
 //     const [citiesList, setCitiesList] = useState([])

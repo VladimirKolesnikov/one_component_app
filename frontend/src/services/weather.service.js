@@ -6,7 +6,7 @@ const defaultParams = {
     // appid: '9a609c0ca09ce1f3734dd3d9a62e32a6',
 };
 
-const getWeaterList = (coord = { lat: 0, lon: 0}) => {
+const getWeatherList = (coord = { lat: 0, lon: 0}) => {
     const params = new URLSearchParams({
         ...defaultParams,
         ...coord,
@@ -49,4 +49,4 @@ const getCityByLocation = (coords) => {
         })
 }
 
-export { getWeaterList, getLocationByCity, getCityByLocation }
+export { getWeatherList, getLocationByCity, getCityByLocation }

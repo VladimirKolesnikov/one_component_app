@@ -1,14 +1,24 @@
 import express from 'express';
 import cors from 'cors';
-import { router as coordRouter } from './routes/coord.router.js';
+import 'dotenv/config';
+import { coordRouter } from './routes/coord.router.js';
+import { authRouter } from './routes/auth.router.js';
+
+const port = process.env.PORT || 3005;
+
+const authMiddleware = (req, res, next) => {
+    next()
+}
 
 const app = express();
 
+app.use(express.json())
 app.use(cors())
 
-app.use('/coords', coordRouter)
+app.use('me/coords', authMiddleware, coordRouter)
+app.use('/auth', authRouter)
 
-app.listen(3005);
+app.listen(port);
 
 // { lat: 47.8507859, lon: 35.1182867 } zp
 // { lat: 50.2598298, lon: 28.6692345 } zhytomyr

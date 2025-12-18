@@ -7,13 +7,17 @@ import { authRouter } from './routes/auth.router.js';
 const port = process.env.PORT || 3005;
 
 const authMiddleware = (req, res, next) => {
+    console.log('from auth middleware')
     next()
 }
 
 const app = express();
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: process.env.CLIENT_HOST,
+    credentials: true,
+}))
 
 app.use('me/coords', authMiddleware, coordRouter)
 app.use('/auth', authRouter)

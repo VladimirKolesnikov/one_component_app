@@ -1,12 +1,12 @@
 import express from 'express';
-// import * as coordController from './../controllers/coord.controller.js';
+import * as authController from './../controllers/auth.controller.js';
 
 
 const authRouter = express.Router();
 
-// router.post('/register', authController)
+authRouter.post('/registraiton', authController.register)
 // router.get('/activation/:activationToken', authController)
-// router.post('/login', authController)
+authRouter.post('/login', authController.login)
 // router.post('/logout', authController)
 // router.get('/refresh', authController)
 

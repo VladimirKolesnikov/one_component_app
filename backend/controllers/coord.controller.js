@@ -1,32 +1,36 @@
-import * as coordService from './../services/coord.service.js';
+import { coordService } from './../services/coord.service.js'
 
 
-export const get = (req, res) => {
-    res.send(coordService.getAll())
+export const get = async (req, res) => {
+    const userId = req.user.id
+    const coords = await coordService.getAllCoordsByUserId(userId)
+    res.send(coords.map(coordService.normalizeCoord))
 }
 
-export const create = (req, res) => {
-    const { coord } = req.body
+export const create = async (req, res) => {
+    const coord = req.body
+    const userId = req.user.id
 
     if (!coord) {
         res.sendStatus(422)
     }
 
-    const newCoord = coordService.create(coord)
+    const newCoord = await coordService.createCoord(coord, userId)
 
     res.statusCode = 201;
-    res.send(newCoord)
+    res.send(coordService.normalizeCoord(newCoord))
 }
 
-export const remove = (req, res) => {
+export const remove = async (req, res) => {
     const { id } = req.params
+    const userId = req.user.id
 
-    if (!coordService.getById(id)) {
+    const deletedCount = await coordService.removeCoord(id, userId)
+
+    if (deletedCount === 0) {
         res.sendStatus(404)
         return
     }
-
-    coordService.remove(id)
 
     res.sendStatus(204)
 }

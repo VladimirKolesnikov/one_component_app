@@ -1,17 +1,27 @@
-import { User } from "../models/User.js";
+import jwtService from "../services/jwtService.js";
 import userService from '../services/userService.js'
 
 export const register = async (req, res) => {
     const { email, password } = req.body;
-// console.log('from auth controller')
-    const newUser = await User.create({ email, passwordHash: password})
-    // console.log(newUser)
-    res.send(newUser)
+    const newUser = await userService.registerUser(email, password)
+    const normalizedUser = userService.normalizeUser(newUser)
+    res.send(normalizedUser)
 }
 
 export const login = async (req, res) => {
     const { email, password } = req.body
+
     const user = await userService.findByEmail(email)
-    console.log('=====', user.email, '============================')
-    res.send(user)
+
+    if (!user) {
+        //alsow check password
+    }
+
+    const normalizedUser = userService.normalizeUser(user)
+    const accessToken = jwtService.sign(normalizedUser)
+
+    res.send({
+        ...normalizedUser,
+        accessToken,
+    });
 }

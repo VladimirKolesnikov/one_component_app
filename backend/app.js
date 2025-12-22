@@ -3,11 +3,19 @@ import cors from 'cors';
 import 'dotenv/config';
 import { coordRouter } from './routes/coord.router.js';
 import { authRouter } from './routes/auth.router.js';
+import jwtService from './services/jwtService.js';
 
 const port = process.env.PORT || 3005;
 
 const authMiddleware = (req, res, next) => {
     console.log('from auth middleware')
+    
+    const authHeader = req.headers['authorization'] || ''
+    const [, accessToken] = authHeader.split(' ')
+    const userData = jwtService.verify(accessToken);
+    const { id, email } = userData;
+    req.user = { id, email }
+
     next()
 }
 
@@ -19,7 +27,7 @@ app.use(cors({
     credentials: true,
 }))
 
-app.use('me/coords', authMiddleware, coordRouter)
+app.use('/me/coords', authMiddleware, coordRouter)
 app.use('/auth', authRouter)
 
 app.listen(port);

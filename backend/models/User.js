@@ -11,6 +11,10 @@ export const User = client.define('users',
         passwordHash: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        activationToken: {
+            type: DataTypes.STRING,
+            allowNull: true,
         }
     },
     {

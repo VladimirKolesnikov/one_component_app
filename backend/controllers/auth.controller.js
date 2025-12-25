@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+// import { v4 as uuidv4 } from 'uuid';
 import jwtService from "../services/jwtService.js";
 import userService from '../services/userService.js'
 
@@ -14,7 +16,14 @@ export const login = async (req, res) => {
     const user = await userService.findByEmail(email)
 
     if (!user) {
-        //alsow check password
+        // throw new myCustomError
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash)
+
+    if (!isPasswordValid) {
+        // throw new myCustomError
+        console.log(isPasswordValid, '------------')
     }
 
     const normalizedUser = userService.normalizeUser(user)

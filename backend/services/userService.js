@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 import { User } from "../models/User.js";
 
 const normalizeUser = (user) => {
@@ -6,10 +8,20 @@ const normalizeUser = (user) => {
 }
 
 const registerUser = async (email, password) => {
+
+    // check is such user exist
+
+    const passwordHash = await bcrypt.hash(password, 10)
+    const activationToken = uuidv4()
+    
     const newUser = await User.create({
         email,
-        passwordHash: password,
+        passwordHash,
+        activationToken,
     })
+
+    // call email service to send email with activation link
+    // for example: emailService.sendEmail(email, activationToken)
 
     return newUser
 }

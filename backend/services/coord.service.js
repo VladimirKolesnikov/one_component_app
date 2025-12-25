@@ -20,6 +20,8 @@ const getAllCoordsByUserId = async (userId) => {
 const createCoord = async (coord, userId) => {
     const { lat, lon } = coord
     
+    // check number of places
+
     const newCoord = await Coord.create({
         lat,
         lon,

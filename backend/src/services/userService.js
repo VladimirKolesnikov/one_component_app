@@ -1,47 +1,46 @@
-import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 import { User } from "../models/User.js";
-import { ApiError } from '../exeptions/apiError.js';
+import { ApiError } from "../exeptions/apiError.js";
 
 const normalizeUser = (user) => {
-    const { id, email } = user;
-    return { id, email }
-}
+  const { id, email } = user;
+  return { id, email };
+};
 
 const registerUser = async (email, password) => {
+  const isUserExist = await findByEmail(email);
 
-    const isUserExist = await findByEmail(email)
+  if (isUserExist) {
+    throw ApiError.badRequest({
+      message: "User already exists",
+      details: {
+        email: "User with this email already exists",
+      },
+    });
+  }
 
-    if(isUserExist) {
-        throw ApiError.badRequest({
-            message: 'User already exists',
-            details: {
-                email: 'User with this email already exists',
-            }
-        })
-    }
+  const passwordHash = await bcrypt.hash(password, 10);
+  const activationToken = uuidv4();
 
-    const passwordHash = await bcrypt.hash(password, 10)
-    const activationToken = uuidv4()
-    
-    const newUser = await User.create({
-        email,
-        passwordHash,
-        activationToken,
-    })
+  const newUser = await User.create({
+    email,
+    passwordHash,
+    activationToken,
+  });
 
-    // call email service to send email with activation link
-    // for example: emailService.sendEmail(email, activationToken)
+  // call email service to send email with activation link
+  // for example: emailService.sendEmail(email, activationToken)
 
-    return newUser
-}
+  return newUser;
+};
 
 const findByEmail = (email) => {
-    return User.findOne({ where: { email }})
-}
+  return User.findOne({ where: { email } });
+};
 
 export const userService = {
-    normalizeUser,
-    registerUser,
-    findByEmail,
-}
+  normalizeUser,
+  registerUser,
+  findByEmail,
+};

@@ -1,8 +1,15 @@
 {
   "private": true,
-  "workspaces": ["frontend", "backend"],
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "f": "npm run dev -w frontend",
     "b": "npm run start -w backend"
+  },
+  "devDependencies": {
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4"
   }
 }

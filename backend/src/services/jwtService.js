@@ -14,7 +14,7 @@ const verify = (token) => {
     }
 }
 
-export default {
+export const jwtService = {
     sign,
     verify,
 }

@@ -1,16 +1,16 @@
 import bcrypt from 'bcrypt';
 // import { v4 as uuidv4 } from 'uuid';
-import jwtService from "../services/jwtService.js";
-import userService from '../services/userService.js'
+import { jwtService } from "../services/jwtService.js";
+import { userService } from '../services/userService.js'
 
-export const register = async (req, res) => {
+const register = async (req, res) => {
     const { email, password } = req.body;
     const newUser = await userService.registerUser(email, password)
     const normalizedUser = userService.normalizeUser(newUser)
     res.send(normalizedUser)
 }
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
 
     const user = await userService.findByEmail(email)
@@ -33,4 +33,9 @@ export const login = async (req, res) => {
         ...normalizedUser,
         accessToken,
     });
+}
+
+export const authController = {
+    register,
+    login,
 }

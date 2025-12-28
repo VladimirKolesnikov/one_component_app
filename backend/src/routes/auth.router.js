@@ -1,5 +1,5 @@
 import express from 'express';
-import * as authController from './../controllers/auth.controller.js';
+import { authController } from './../controllers/auth.controller.js';
 import { errorCatcher } from '../utils/errorCatcher.js'
 
 

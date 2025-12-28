@@ -26,11 +26,5 @@ app.listen(port);
 // { lat: 48.6223732, lon: 22.3022569 } uzhhorod
 // { lat: 48.4680221, lon: 35.0417711 } dnipro
 
-// app.options('/coords', (req, res) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*')
-//     res.setHeader('Access-Control-Allow-Headers', '*')
-//     res.setHeader('Access-Control-Allow-Methods', '*')
-// })
-
 // res.status(code)
 // res.json()

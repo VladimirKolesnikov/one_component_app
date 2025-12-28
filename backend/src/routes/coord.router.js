@@ -10,3 +10,4 @@ coordRouter.post('/', errorCatcher(coordController.create))
 coordRouter.delete('/:id', errorCatcher(coordController.remove))
 
 export { coordRouter }
+

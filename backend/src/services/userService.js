@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from "../models/User.js";
+import { ApiError } from '../exeptions/apiError.js';
 
 const normalizeUser = (user) => {
     const { id, email } = user;
@@ -9,7 +10,16 @@ const normalizeUser = (user) => {
 
 const registerUser = async (email, password) => {
 
-    // check is such user exist
+    const isUserExist = await findByEmail(email)
+
+    if(isUserExist) {
+        throw ApiError.badRequest({
+            message: 'User already exists',
+            details: {
+                email: 'User with this email already exists',
+            }
+        })
+    }
 
     const passwordHash = await bcrypt.hash(password, 10)
     const activationToken = uuidv4()
@@ -30,7 +40,7 @@ const findByEmail = (email) => {
     return User.findOne({ where: { email }})
 }
 
-export default {
+export const userService = {
     normalizeUser,
     registerUser,
     findByEmail,

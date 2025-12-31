@@ -1,23 +1,33 @@
+import { ApiError } from "../exeptions/apiError.js";
 import { coordService } from "../services/coordService.js";
 
 const get = async (req, res) => {
   const userId = req.user.id;
   const coords = await coordService.getAllCoordsByUserId(userId);
-  res.send(coords.map(coordService.normalizeCoord));
+  res.status(200);
+  res.json(coords.map(coordService.normalizeCoord));
 };
 
 const create = async (req, res) => {
   const coord = req.body;
   const userId = req.user.id;
 
-  if (!coord) {
-    res.sendStatus(422);
+  const { lat, lon } = coord;
+
+  if (!lat || !lon) {
+    throw ApiError.badRequest({ message: "Wrong coordinates format" })
+  }
+
+  const existingCoords = await coordService.getAllCoordsByUserId(userId);
+
+  if (existingCoords.length >= 5) {
+    throw ApiError.badRequest({ message: "Maximum number of places reached" })
   }
 
   const newCoord = await coordService.createCoord(coord, userId);
 
-  res.statusCode = 201;
-  res.send(coordService.normalizeCoord(newCoord));
+  res.status(201);
+  res.json(coordService.normalizeCoord(newCoord));
 };
 
 const remove = async (req, res) => {
@@ -27,11 +37,13 @@ const remove = async (req, res) => {
   const deletedCount = await coordService.removeCoord(id, userId);
 
   if (deletedCount === 0) {
-    res.sendStatus(404);
+    res.status(404);
+    res.end();
     return;
   }
 
-  res.sendStatus(204);
+  res.status(204);
+  res.end();
 };
 
 export const coordController = {

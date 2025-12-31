@@ -1,4 +1,5 @@
 import { ApiError } from "../exeptions/apiError.js";
+import { jwtService } from "../services/jwtService.js";
 
 export const authMiddleware = (req, res, next) => {
   const authHeader = req.headers["authorization"] || "";
@@ -10,7 +11,7 @@ export const authMiddleware = (req, res, next) => {
     });
   }
 
-  const userData = jwtService.verify(accessToken);
+  const userData = jwtService.verifyAccess(accessToken);
   const { id, email } = userData;
 
   if (!userData) {

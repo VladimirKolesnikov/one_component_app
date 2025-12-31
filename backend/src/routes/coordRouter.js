@@ -1,5 +1,5 @@
 import express from "express";
-import * as coordController from "../controllers/coordController.js";
+import { coordController } from "../controllers/coordController.js"
 import { errorCatcher } from "../utils/errorCatcher.js";
 
 const coordRouter = express.Router();

@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import { coordRouter } from "./routes/coordRouter.js";
 import { authRouter } from "./routes/authRouter.js";
+import { storageRouter } from "./routes/storageRouter.js";
 import { authMiddleware } from "./middlewares/authMIddleware.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
@@ -19,6 +20,7 @@ app.use(
 );
 app.use("/me/coords", authMiddleware, coordRouter);
 app.use("/auth", authRouter);
+app.use("/storage", storageRouter);
 app.use(errorMiddleware);
 
 app.listen(port);

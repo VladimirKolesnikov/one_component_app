@@ -10,8 +10,9 @@ const normalizeUser = (user) => {
 
 const registerUser = async (email, password) => {
   const isUserExist = await findByEmail(email);
-
+// console.log('1111111111111111111111111111111111', isUserExist)
   if (isUserExist) {
+    // console.log('2222222222222222222222222222222')
     throw ApiError.badRequest({
       message: "User already exists",
       details: {

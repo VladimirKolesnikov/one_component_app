@@ -9,37 +9,29 @@ const normalizeCoord = (coord) => {
   };
 };
 
-const getAllCoordsByUserId = async (userId) => {
-  const coords = await Coord.findAll({
+const getAllCoordsByUserId = (userId) => {
+  return Coord.findAll({
     where: { userId },
   });
-
-  return coords;
 };
 
 const createCoord = async (coord, userId) => {
   const { lat, lon } = coord;
 
-  // check number of places
-
-  const newCoord = await Coord.create({
+  return Coord.create({
     lat,
     lon,
     userId,
   });
-
-  return newCoord;
 };
 
-const removeCoord = async (id, userId) => {
-  const count = await Coord.destroy({
+const removeCoord = (id, userId) => {
+  return Coord.destroy({
     where: {
       id,
       userId,
     },
   });
-
-  return count;
 };
 
 export const coordService = {
